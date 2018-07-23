@@ -35,6 +35,9 @@ require(["jquery"], function ($) {
     window.location.reload();
   })
 
+  if ("{{ progress_url }}" == "") {
+    window.location.reload();
+  }
   // hook up event-stream for progress
   var evtSource = new EventSource("{{ progress_url }}");
   var progressMessage = $("#progress-message");
