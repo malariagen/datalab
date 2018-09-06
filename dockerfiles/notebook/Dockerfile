@@ -15,7 +15,7 @@ RUN conda install --yes \
     -c intake \
     -c conda-forge \
     -c bioconda \
-     --file conda.txt \
+    --file conda.txt \
     && conda clean -tipsy
 
 RUN pip install --upgrade pip
