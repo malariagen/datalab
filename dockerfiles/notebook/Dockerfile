@@ -23,7 +23,7 @@ RUN pip install --upgrade pip
 RUN pip install fusepy \
                 jedi \
                 kubernetes==6.0.0 \
-                dask-kubernetes==0.4.0 \
+                git+https://github.com/dask/dask-kubernetes@bf39445adfe6a75af10aace9bd9bd1f82cf0a545 \
                 gcsfs==0.1.0 \
                 xesmf \
                 nbserverproxy==0.8.1 \
