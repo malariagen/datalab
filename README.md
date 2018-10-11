@@ -1,2 +1,3 @@
-# jupyterhub
-Repo for files and issues related to cloud deployment of JupyterHub.
+# MalariaGEN DataLab
+
+Repo for files and issues related to cloud deployments of JupyterHub for MalariaGEN.
