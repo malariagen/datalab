@@ -1,0 +1,1 @@
+helm --debug upgrade --install jupyter mgen/malariagen --namespace=malariagen --version=v0.0.0-3f35509 -f  custom-template-config.yaml -f mgen-cas-secret.yaml

@@ -1,0 +1,67 @@
+jupyterhub:
+  singleuser:
+    image:      
+      name: malariagen/jupyter-notebook
+      tag: test0ff
+    cmd: ['start-singleuser.sh']
+    extraEnv:
+      EXTRA_PIP_PACKAGES: >-
+      GCSFUSE_BUCKET: ag1000g-release 
+    storage:
+      extraVolumes:
+        - name: fuse
+          hostPath:
+            path: /dev/fuse
+      extraVolumeMounts:
+        - name: fuse
+          mountPath: /dev/fuse
+    cloudMetadata:
+      enabled: true
+    cpu:
+      limit: 4
+      guarantee: 1
+    memory:
+      limit: 14G
+      guarantee: 4G
+
+  hub:
+    image:
+      name: wmit/jupyterhub-k8s-hub-casauth 
+      tag: v0.6
+    extraVolumes:
+      - name: custom-templates
+        gitRepo:
+          repository: "https://github.com/malariagen/datalab.git"
+    extraVolumeMounts:
+      - mountPath: /usr/local/share/jupyter/hub/static/custom
+        name: custom-templates
+        subPath: "datalab/jhub-template/static/images"
+      - mountPath: /usr/local/share/jupyter/hub/custom_templates
+        name: custom-templates
+        subPath: "datalab/jhub-template/templates"
+      - mountPath: /usr/local/share/jupyter/hub/static
+        name: custom-templates
+        subPath: "datalab/jhub-template/static"
+    extraConfig:
+      customPodHook: |
+        import jhub_cas_authenticator.cas_auth
+        from kubernetes import client
+        def modify_pod_hook(spawner, pod):
+            pod.spec.containers[0].security_context = client.V1SecurityContext(
+                privileged=True,
+                capabilities=client.V1Capabilities(
+                    add=['SYS_ADMIN']
+                )
+            )
+            return pod
+        c.KubeSpawner.modify_pod_hook = modify_pod_hook
+        c.JupyterHub.logo_file = '/usr/local/share/jupyter/hub/static/custom/datalab.png'
+        c.JupyterHub.template_paths = ['/usr/local/share/jupyter/hub/custom_templates/',
+                                '/usr/local/share/jupyter/hub/templates/']
+
+  cull:
+    enabled: true
+    users: false
+    timeout: 1200
+    every: 600
+
