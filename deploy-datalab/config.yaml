@@ -1,0 +1,4 @@
+proxy:
+  secretToken: c65b057a6ba96ee5562f4ea7d78f949d353908f52601c50c29223dd30166ccf1
+  service:
+    type: NodePort
