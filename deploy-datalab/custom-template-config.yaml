@@ -2,7 +2,7 @@ jupyterhub:
   singleuser:
     image:      
       name: malariagen/jupyter-notebook
-      tag: test0ff
+      tag: sgtest2
     cmd: ['start-singleuser.sh']
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
