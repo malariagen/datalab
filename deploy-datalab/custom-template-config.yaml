@@ -2,7 +2,7 @@ jupyterhub:
   singleuser:
     image:      
       name: malariagen/jupyter-notebook
-      tag: sgtest2
+      tag: 1.0.2
     cmd: ['start-singleuser.sh']
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
@@ -21,25 +21,25 @@ jupyterhub:
       limit: 4
       guarantee: 1
     memory:
-      limit: 14G
+      limit: 4G
       guarantee: 4G
 
   hub:
     image:
-      name: wmit/jupyterhub-k8s-hub-casauth 
-      tag: v0.6
+      name: malariagen/hubimage
+      tag: test02
     extraVolumes:
       - name: custom-templates
         gitRepo:
           repository: "https://github.com/malariagen/datalab.git"
     extraVolumeMounts:
-      - mountPath: /usr/local/share/jupyter/hub/static/custom
+      - mountPath: /usr/local/share/jupyterhub/static/custom
         name: custom-templates
         subPath: "datalab/jhub-template/static/images"
-      - mountPath: /usr/local/share/jupyter/hub/custom_templates
+      - mountPath: /usr/local/share/jupyterhub/custom_templates
         name: custom-templates
         subPath: "datalab/jhub-template/templates"
-      - mountPath: /usr/local/share/jupyter/hub/static
+      - mountPath: /usr/local/share/jupyterhub/static
         name: custom-templates
         subPath: "datalab/jhub-template/static"
     extraConfig:
@@ -55,9 +55,9 @@ jupyterhub:
             )
             return pod
         c.KubeSpawner.modify_pod_hook = modify_pod_hook
-        c.JupyterHub.logo_file = '/usr/local/share/jupyter/hub/static/custom/datalab.png'
-        c.JupyterHub.template_paths = ['/usr/local/share/jupyter/hub/custom_templates/',
-                                '/usr/local/share/jupyter/hub/templates/']
+        c.JupyterHub.logo_file = '/usr/local/share/jupyterhub/static/custom/datalab.png'
+        c.JupyterHub.template_paths = ['/usr/local/share/jupyterhub/custom_templates/',
+                                '/usr/local/share/jupyterhub/templates/']
 
   cull:
     enabled: true
