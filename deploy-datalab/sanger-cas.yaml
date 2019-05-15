@@ -1,0 +1,9 @@
+jupyterhub:
+  auth:
+    type: custom
+    custom:
+      className: jhub_cas_authenticator.cas_auth.CASAuthenticator
+      config:
+        cas_login_url: https://www.malariagen.net/sso/login
+        cas_service_url: https://datalab.malariagen.sanger.ac.uk/hub/login
+        cas_service_validate_url: https://www.malariagen.net/sso/p3/serviceValidate 
