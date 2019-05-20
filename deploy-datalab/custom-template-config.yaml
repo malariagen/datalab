@@ -27,7 +27,7 @@ jupyterhub:
   hub:
     image:
       name: malariagen/hubimage
-      tag: test02
+      tag: test04
     extraVolumes:
       - name: custom-templates
         gitRepo:
