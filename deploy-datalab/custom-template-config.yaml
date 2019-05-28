@@ -55,7 +55,7 @@ jupyterhub:
             )
             return pod
         c.KubeSpawner.modify_pod_hook = modify_pod_hook
-        c.JupyterHub.log_level = 'DEBUG'
+        #  c.JupyterHub.log_level = 'DEBUG'
         c.JupyterHub.logo_file = '/usr/local/share/jupyterhub/static/custom/datalab.png'
         c.JupyterHub.template_paths = ['/usr/local/share/jupyterhub/custom_templates/',
                                 '/usr/local/share/jupyterhub/templates/']
