@@ -1,5 +1,20 @@
 metadata:
 spec:
+  tolerations:
+   - key: "preemptible"
+     operator: "Equal"
+     value: "true"
+     effect: "NoSchedule"
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: cloud.google.com/gke-preemptible
+            operator: In
+            values:
+            - "true"
   restartPolicy: Never
   containers:
   - args:
@@ -11,7 +26,7 @@ spec:
       - 6GB
       - --death-timeout
       - '60'
-    image: malariagen/jupyter-notebook:rel01
+    image: malariagen/jupyter-notebook:1.0.2
     name: dask-worker
     securityContext:
       capabilities:
