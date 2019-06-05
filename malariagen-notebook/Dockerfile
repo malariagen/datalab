@@ -1,32 +1,38 @@
-# malariagen/jupyter-notebook:test6
-# jupyter/base-noteobok uploaded 2018-06-13
 FROM jupyter/base-notebook:4417b81d04b7
 
 USER root
 RUN apt-get update \
-  && apt-get install -yq --no-install-recommends dnsutils libfuse-dev nano fuse vim git build-essential \
+  && apt-get install -yq --no-install-recommends dnsutils libfuse-dev nano fuse vim git build-essential  openssh-client \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
+
 USER $NB_USER
 RUN conda config --set ssl_verify no
 COPY conda.txt /conda.txt
 COPY pip.txt /pip.txt
+
+
 RUN conda config --add channels conda-forge
-RUN    conda update --yes conda
 RUN conda config --add channels pyviz/label/dev
 RUN conda config --add channels bokeh/label/dev
 RUN conda config --add channels intake
 RUN conda config --add channels bioconda
-RUN conda config --add channels conda-forge
+RUN conda update --yes conda
 
-RUN conda install --yes  python=3.6 \
+
+RUN conda install --yes  \
     -c pyviz/label/dev \
     -c bokeh/channel/dev \
     -c intake \
     -c conda-forge \
     -c bioconda \
     --file /conda.txt \
-    && conda clean -tipsy
+    && conda clean -afy \
+    && find /opt/conda/ -follow -type f -name '*.a' -delete \
+    && find /opt/conda/ -follow -type f -name '*.pyc' -delete \
+    && find /opt/conda/ -follow -type f -name '*.js.map' -delete \
+    && find /opt/conda/lib/python*/site-packages/bokeh/server/static -follow -type f -name '*.js' ! -name '*.min.js' -delete
+
 
 RUN pip install --upgrade pip
 
