@@ -1,8 +1,8 @@
 jupyterhub:
   singleuser:
     image:      
-      name: malariagen/jupyter-notebook
-      tag: 1.0.2
+      name: malariagen/datalab-dev
+      tag: dev-0.1.178
     cmd: ['start-singleuser.sh']
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
@@ -21,7 +21,7 @@ jupyterhub:
       limit: 4
       guarantee: 1
     memory:
-      limit: 4G
+      limit: 14G
       guarantee: 4G
 
   hub:
