@@ -2,9 +2,8 @@
 
 set -x
 
-echo "Copying files from skeleton home directory into home..."
-cp --update -r -v /etc/skel/. /home/jovyan
-echo "Done"
+echo "Copy files from pre-load directory into home"
+cp --update -r -v /pre-home/. /home/jovyan
 
 if [ -e "/opt/app/environment.yml" ]; then
     echo "environment.yml found. Installing packages"
@@ -26,6 +25,25 @@ fi
 if [ "$GCSFUSE_BUCKET" ]; then
     echo "Mounting $GCSFUSE_BUCKET to /gcs"
     /opt/conda/bin/gcsfuse $GCSFUSE_BUCKET /gcs --background
+fi
+
+# check if we are on Sanger internal network and datalab.malariagen.sanger.ac.uk resolves
+
+dig +timeout=1  +short @172.18.255.1 datalab.malariagen.sanger.ac.uk
+rc=$?
+
+if [[ $rc = 0 ]];
+
+
+then
+        echo "DNS OK"
+echo "nameserver 172.18.255.1" > /tmp/resolv.conf
+cat /etc/resolv.conf >> /tmp/resolv.conf
+sudo cp /tmp/resolv.conf /etc/resolv.conf
+
+else
+ echo "DNS record for datalab not found"
+
 fi
 $@
 
