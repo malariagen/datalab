@@ -2,7 +2,7 @@ jupyterhub:
   singleuser:
     image:      
       name: malariagen/datalab-dev
-      tag: dev-0.1.201
+      tag: dev-0.1.198
     cmd: ['start-singleuser.sh']
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
@@ -15,6 +15,15 @@ jupyterhub:
       extraVolumeMounts:
         - name: fuse
           mountPath: /dev/fuse
+      extraVolumes:
+        - name: nfs-volume
+          nfs:
+            server: 10.233.41.41
+            path: / 
+      extraVolumeMounts:
+        - name: nfs-volume
+          mountPath: /home/jovyan/nfs
+          
     cloudMetadata:
       enabled: true
     cpu:

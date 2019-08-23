@@ -1,0 +1,15 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nfs-client-pod
+  labels:
+    role: nfs-client
+spec:
+  containers:
+    - name: nfs-client-container
+      image: ubuntu
+      env:
+      - name: "SHARED_DIRECTORY"
+        value: "/var/nfs"
+      securityContext:
+        privileged: true
