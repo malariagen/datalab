@@ -1,12 +1,12 @@
 jupyterhub:
   singleuser:
-    image:      
-      name: malariagen/datalab-dev
-      tag: dev-0.1.178
+    image:
+      name: malariagen/datalab
+      tag: c7c0c95
     cmd: ['start-singleuser.sh']
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
-      GCSFUSE_BUCKET: ag1000g-release 
+      GCSFUSE_BUCKET: ag1000g-release
     storage:
       extraVolumes:
         - name: fuse
@@ -19,10 +19,10 @@ jupyterhub:
       enabled: true
     cpu:
       limit: 4
-      guarantee: 1
+      guarantee: 1.3
     memory:
       limit: 14G
-      guarantee: 4G
+      guarantee: 6G
 
   hub:
     image:
