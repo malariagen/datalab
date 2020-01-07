@@ -2,7 +2,7 @@ jupyterhub:
   singleuser:
     image:
       name: malariagen/datalab
-      tag: c7c0c95
+      tag: b0e124f
     cmd: ['start-singleuser.sh']
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
